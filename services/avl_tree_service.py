@@ -1,17 +1,20 @@
-import factories.avl_data_factory as AvlTreeFactory
+from factories.avl_data_factory import AvlDataFactory
 from classes.avl.avl_tree import AVLTree
 
 
-def build(nodes):
-    tree = AVLTree(nodes)
-    return tree
+class AvlTreeService(object):
 
+    @staticmethod
+    def __build__(nodes):
+        tree = AVLTree(nodes)
+        return tree
 
-def print_tree(tree):
-    tree.display()
+    @staticmethod
+    def __print_tree__(tree):
+        tree.display()
 
-
-def generate_and_print():
-    nodes = AvlTreeFactory.get_tree_data()
-    tree = build(nodes)
-    print_tree(tree)
+    @staticmethod
+    def generate_and_print():
+        nodes = AvlDataFactory.get_tree_data()
+        tree = AvlTreeService.__build__(nodes)
+        AvlTreeService.__print_tree__(tree)

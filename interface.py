@@ -1,4 +1,4 @@
-import services.avl_tree_service as AvlTreeService
+from services.avl_tree_service import AvlTreeService
 
 
 def not_generated():
