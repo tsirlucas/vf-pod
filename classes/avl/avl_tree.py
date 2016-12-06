@@ -9,7 +9,7 @@ def debug(msg):
         print msg
 
 
-class AVLTree:
+class AvlTree:
     def __init__(self, *args):
         self.node = None
         self.height = -1
@@ -35,8 +35,8 @@ class AVLTree:
 
         if tree is None:
             self.node = new_node
-            self.node.left = AVLTree()
-            self.node.right = AVLTree()
+            self.node.left = AvlTree()
+            self.node.right = AvlTree()
             debug("Inserted name [" + str(node.name) + "]")
 
         elif node.name < tree.name:

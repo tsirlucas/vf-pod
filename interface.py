@@ -1,4 +1,5 @@
 from services.avl_tree_service import AvlTreeService
+from services.binary_tree_service import BinaryTreeService
 
 
 def not_generated():
@@ -15,7 +16,7 @@ def kill_interface():
 
 options = {
     '1': AvlTreeService.generate_and_print,
-    '2': not_generated,
+    '2': BinaryTreeService.generate_and_print,
     '3': not_generated,
     '4': kill_interface
 }
