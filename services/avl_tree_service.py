@@ -14,7 +14,13 @@ class AvlTreeService(object):
         tree.display()
 
     @staticmethod
+    def export_tree(tree):
+        nodes = tree.get_ordered_nodes()
+        AvlDataFactory.export_tree(nodes)
+
+    @staticmethod
     def generate_and_print():
         nodes = AvlDataFactory.get_tree_data()
         tree = AvlTreeService.build(nodes)
         AvlTreeService.print_tree(tree)
+        AvlTreeService.export_tree(tree)

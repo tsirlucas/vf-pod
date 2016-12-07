@@ -177,6 +177,21 @@ class AvlTree:
 
         return inlist
 
+    def set_ordered_nodes(self, nodes):
+        if self.node is not None:
+            if self.node.left is not None:
+                self.node.left.set_ordered_nodes(nodes)
+            nodes.append(self.node)
+            if self.node.right is not None:
+                self.node.right.set_ordered_nodes(nodes)
+        return nodes
+
+    def get_ordered_nodes(self):
+        nodes = []
+        self.update_heights()
+        self.update_balances()
+        return self.set_ordered_nodes(nodes)
+
     def display(self, level=0, pref=''):
         '''
         Display the whole tree. Uses recursive def.
