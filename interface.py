@@ -1,9 +1,6 @@
 from services.avl_tree_service import AvlTreeService
 from services.binary_tree_service import BinaryTreeService
-
-
-def not_generated():
-    print 'Not generated yet'
+from services.red_black_tree_service import RedBlackTreeService
 
 
 def invalid_key():
@@ -17,7 +14,7 @@ def kill_interface():
 options = {
     '1': AvlTreeService.generate_and_print,
     '2': BinaryTreeService.generate_and_print,
-    '3': not_generated,
+    '3': RedBlackTreeService.generate_and_print,
     '4': kill_interface
 }
 
