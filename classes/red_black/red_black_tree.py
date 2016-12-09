@@ -3,10 +3,12 @@ from classes.red_black.red_black_node import Node
 
 class RedBlackTree(object):
 
-    def __init__(self, create_node=Node):
-        self.nil = create_node(name=None)
+    def __init__(self, nodes):
+        self.nil = Node(name=None, age = None, course = None)
         self.root = self.nil
-        self.create_node = create_node
+
+        for node in nodes: 
+            self.insert_node(node)
 
     def minimum(self, x=None):
         if x is None:
@@ -21,9 +23,6 @@ class RedBlackTree(object):
         while x.right != self.nil:
             x = x.right
         return x
-
-    def insert_key(self, name):
-        self.insert_node(self.create_node(name=name))
 
     def insert_node(self, z):
         y = self.nil
@@ -144,60 +143,28 @@ class RedBlackTree(object):
         num_black, is_ok = is_red_black_node(self.root)
         return is_ok and not self.root.red
 
+    def set_ordered_nodes(self, nodes, node):
+        if node is not None:
+            if node.left is not None:
+                self.set_ordered_nodes(nodes, node.left)
+            nodes.append(node)
+            if node.right is not None:
+                self.set_ordered_nodes(nodes, node.right)
+        return nodes
 
-def write_tree_as_dot(t, f, show_nil=False):
-    def node_id(node):
-        return 'N%d' % id(node)
+    def get_ordered_nodes(self, tree):
+        nodes = []
+        return self.set_ordered_nodes(nodes, tree.root)
 
-    def node_color(node):
-        if node.red:
-            return "red"
-        else:
-            return "black"
+    def display(self, node, level=0, pref=''):
+        '''
+        Display the whole tree. Uses recursive def.
+        '''
+        if node is not None:
+            print '-' * level * 3, pref, node.name if node.name else 'nil', "[" + str('vermelho' if node.red else 'preto') + "]"
+            if node.left is not None:
+                self.display(node.left, level + 1, '<')
+            if node.left is not None:
+                self.display(node.right, level + 1, '>')
 
-    def visit_node(node):
-        print >> f, "  %s [label=\"%s\", color=\"%s\"];" % (node_id(node), node, node_color(node))
-        if node.left:
-            if node.left != t.nil or show_nil:
-                visit_node(node.left)
-                print >> f, "  %s -> %s ;" % (node_id(node), node_id(node.left))
-        if node.right:
-            if node.right != t.nil or show_nil:
-                visit_node(node.right)
-                print >> f, "  %s -> %s ;" % (node_id(node), node_id(node.right))
-
-    print >> f, "// Created by rbtree.write_dot()"
-    print >> f, "digraph red_black_tree {"
-    visit_node(t.root)
-    print >> f, "}"
-
-
-def test_tree(t, keys):
-    assert t.check_invariants()
-    for i, key in enumerate(keys):
-        for key2 in keys[:i]:
-            assert t.nil != t.search(key2)
-        for key2 in keys[i:]:
-            assert (t.nil == t.search(key2)) ^ (key2 in keys[:i])
-        t.insert_key(key)
-        assert t.check_invariants()
-
-
-if '__main__' == __name__:
-    import os, sys, numpy.random as R
-
-
-    def write_tree(t, filename):
-        f = open('%s.dot' % filename, 'w')
-        write_tree_as_dot(t, f)
-        f.close()
-        os.system('dot %s.dot -Tsvg -o %s.svg' % (filename, filename))
-
-
-    R.seed(2)
-    size = 50
-    keys = R.randint(-50, 50, size=size)
-    t = RedBlackTree()
-    test_tree(t, keys)
-    write_tree(t, 'tree')
 
