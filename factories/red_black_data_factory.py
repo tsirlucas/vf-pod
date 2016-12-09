@@ -18,5 +18,6 @@ class RedBlackDataFactory(object):
         with open('assets/exports/red-black-tree.csv', 'w') as csv_file:
             tree_writer = csv.writer(csv_file, delimiter=';', quotechar='"', skipinitialspace=True, strict=True)
             for node in nodes:
-                tree_writer.writerow([node.name.encode("utf-8"), node.age.encode("utf-8"), node.course.encode("utf-8"), ''])
+                if(node.name):
+                    tree_writer.writerow([node.name.encode("utf-8"), node.age.encode("utf-8"), node.course.encode("utf-8"), ''])
             print '.csv exportado!'
